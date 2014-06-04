@@ -33,4 +33,10 @@ class Cell
 		self
 	end
 
+	def build(ship, board)
+		# ship.coordinates expected to return an array ["A1", "A2", "A3"]
+		ship.coordinates.map do |coord|
+			board.representation[coord].status = :ship
+		end
+	end
 end

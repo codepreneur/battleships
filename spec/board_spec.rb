@@ -37,13 +37,7 @@ describe Board do
 			end
 		end
 
-		it 'can build a ship' do
-		ship1 = double :ship1, coordinates: ["A1", "A2", "A3"]
-		cell.build(ship1, board)
-		["A1", "A2", "A3"].all? do |coord|
-			expect(board.representation[coord].status).to eq :ship
-		end
-	end
+		
 
 		it 'knows when a ship is sunk'
 
