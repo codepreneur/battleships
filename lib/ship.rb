@@ -8,7 +8,9 @@ class Ship
 		@type = set_type_according_to_size(size)
 		@status = :floating
 		@hit_count = 0
+
 	end
+
 
 	def type
 		@type
@@ -71,5 +73,15 @@ class Ship
 		hit_count == 1 ? message_modifier = "hit" : message_modifier = "hits" 
 		@hit_count == size ? @status = :sunk : "#{@type} has taken #{hit_count} #{message_modifier}"
 	end
+
+	def horizontal?
+
+	end
+
+	def vertical?
+
+	end
+
+
 
 end
