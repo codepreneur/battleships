@@ -1,13 +1,17 @@
 class Board
 
-	def initialize
+	DEFAULT_CAPACITY = 5
+
+	attr_writer :capacity
+
+	def initialize(options={})
 		@representation = create_empty_grid
+		self.capacity = options.fetch(:capacity, capacity)
 	end
 
 	def representation
 		@representation
 	end
-
 
 	def create_empty_grid
 		grid = {}
@@ -15,8 +19,34 @@ class Board
 		grid
 	end
 
+	def capacity
+		@capacity ||= DEFAULT_CAPACITY
+	end
 
-	
+	def build(ship)
+		# ship.coordinates expected to return an array ["A1", "A2", "A3"]
+		ship.coordinates.map do |coord|
+			representation[coord].status = :ship
+		end
+		
+		add_to_board(ship)
+	end	
 
+	def add_to_board(ship)
+		raise RuntimeError if number_of_ships >= 10
+		ship_holder << ship
+	end
+
+	def ship_holder
+		@ship_holder ||= []
+	end
+
+	def number_of_ships
+		ship_holder.count
+	end
+
+	def sunk_ship_holder
+		ship_holder.select{|ship| ship.status == :sunk}
+	end
 
 end
