@@ -67,24 +67,22 @@ describe Ship do
 	end
 
 	it "can sink" do
-		ship = Ship.new(4)
-		ship.sink
+		ship = Ship.new(1)
+		ship.take_hit
 		expect(ship.status).to eq :sunk		
 	end
 
 	it "knows if it\'s sunk" do
-		ship = Ship.new(4)
-		ship.sink
+		ship = Ship.new(1)
+		ship.take_hit
 		expect(ship.sunk?).to be_true
 		expect(ship.floating?).to be_false
 	end
 
 	it "cannot be sunk more than once" do
-
-		ship = Ship.new(4)
-		ship.sink
+		ship = Ship.new(1)
+		ship.take_hit
 		expect(ship.sink).to eq "ship already sunk"
-
 	end
 
 	it "keeps track of the hits it takes" do
@@ -102,6 +100,12 @@ describe Ship do
 		expect(ship.status).to eq :sunk
 	end
 
+
+	it "cannot be sunk if not taken maximum number of hits" do
+		ship = Ship.new(2)
+		expect(ship.sink).to eq "ship shouldn\'t sink yet"		
+
+	end
 
 	xit "has a location" do 
 

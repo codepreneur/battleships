@@ -44,12 +44,20 @@ class Ship
 	end
 
 	def sink
-		(@status == :floating) ? @status = :sunk : "ship already sunk"
+		if @hit_count == @size && !sunk?
+			@status = :sunk
+		elsif @hit_count == @size && sunk?
+			"ship already sunk"
+		else 
+			"ship shouldn\'t sink yet"
+		end
+		# @status == :floating ? @status = :sunk : "ship already sunk"
 	end
 
 	def take_hit
 		@hit_count += 1 unless @hit_count == @size
-		@hit_count == size ? @status = :sunk : "#{@type} has taken #{hit_count} hit"
+		hit_count == 1 ? message_modifier = "hit" : message_modifier = "hits" 
+		@hit_count == size ? @status = :sunk : "#{@type} has taken #{hit_count} #{message_modifier}"
 	end
 
 end
