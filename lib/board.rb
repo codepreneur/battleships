@@ -16,14 +16,12 @@ class Board
 	end
 
 
-	# def attack(coord,cell)
-	# 	# if representation[coordinate].status == :ship 
-	# 	# 	cell.hit!
-	# 	# end
-	# 	if self.representation[coord].status == :empty
-	# 		cell.missed!
-	# 	end
-	# end
+	def build(ship, board)
+		# ship.coordinates expected to return an array ["A1", "A2", "A3"]
+		ship.coordinates.map do |coord|
+			board.representation[coord].status = :ship
+		end
+	end
 
 
 end

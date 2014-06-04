@@ -8,17 +8,14 @@ class Cell
 		@status
 	end
 
-	def attack(coordinate,board)
-		if board.representation[coordinate].status == :ship 
-			hit!
-		end
-		if board.representation[coordinate].status == :empty
-			missed!
-		end
+	def status=(value)
+		@status=value
 	end
 
-	def build(coordinate,board)
-		
+
+	def attempt(coordinate,board)
+		hit! if board.representation[coordinate].status == :ship 
+		missed! if board.representation[coordinate].status == :empty
 	end
 
 	def ship!

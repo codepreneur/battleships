@@ -2,35 +2,58 @@ require 'ship'
 
 describe Ship do
 	
-	# let(:ship) { Ship.new }
 
-	it 'has a size when initialised' do
-		ship = Ship.new(4)
-		expect(ship.size).not_to eq nil
-	end
 
-	it 'is not sunk when first created' do
-		ship = Ship.new(4)
-		expect(ship.sunk?).to be_false
-	end
-
-	it 'is sunk when all of its lives are taken' do
-		ship = Ship.new(2)
-		puts ship.hits.inspect
-		2.times { ship.receives_hit }
-		puts ship.hits.inspect
-		expect(ship.sunk?).to be_true
-	end
-
-	# it 'has a size when initialised' do
-	# 	ship = Ship.new(size: 4)
-	# 	expect(ship.size).to eq 4
-	# end
-
-	# it 'can be hit' do
-	# 	expect(ship).to receive(:hit)
-	# end
 end
+
+# player would give position, size, direction
+    # 1. player.place('A1',2,'N')
+    # inside place method --> Ship.new(A1',2,'N')
+    # inside ship initialize --> checking rules
+    # class Ship
+    #   def initialize(board, coord, size, direction)
+    #     @board = board
+    #     @coord = coord
+    #     @size = size
+    #     checkValidPosition
+    #   end
+    #   def checkValidPosition
+    #      calcCoords
+    #       overlapWithOtherShips
+    #       onBoard
+    #       notAdjacent
+           
+    #   end
+    #def overlapWithOtherShips
+    #  @board.ships.each |s|
+    #    overlapswith?(s)
+    #end
+    #def overlapswith? ship
+    #end
+    # end
+
+
+    # 2. player.place('A1',2,'N')
+    # check validity of place attempt
+    # class Player
+    #   def place(....)
+    #     checkValidPosition(...)
+    #   end
+    # end
+    # only initialise ship if valid
+
+
+
+    # 3. board
+
+    #board.checkForCollisions
+
+    #def checkForCollisions
+    #  @ships.pairs do |s1,s2|
+   #     s1.overlapsWith(s2)
+    #  end
+
+   # end
 
 
 
