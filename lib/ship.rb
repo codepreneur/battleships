@@ -5,7 +5,6 @@ class Ship
 	def initialize(coord_array)
 		@coord_array = coord_array
 		@size = set_size_according_to_coordinates(coord_array)
-
 		@type = set_type_according_to_size(size)
 		@status = :floating
 		@hit_count = 0
