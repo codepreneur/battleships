@@ -11,10 +11,6 @@ class Ship
 		@status = :floating
 		@hit_count = 0
 		split
-<<<<<<< HEAD
-		
-=======
->>>>>>> ecf83073a7df3d2274b5f3f13d0fb66cbd7c182e
 	end
 
 	def coord_letters
