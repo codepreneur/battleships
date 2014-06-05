@@ -85,7 +85,6 @@ describe Board do
 			board2.build(ship2)
 			board2.register_shot_at("C6")
 			board2.register_shot_at("C7")
-			p board2.sunk_ship_holder
 			expect(board2.sunk_ship_holder.count).to eq board2.capacity
 		end
 
