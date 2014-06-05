@@ -46,6 +46,14 @@ class Board
 		ship_holder.count
 	end
 
+	def register_shot_at coordinate
+		status = representation[coordinate].shoot!
+		ship_holder.each{|ship| ship.hit_cells(self)}
+		ship_holder.each{|ship| ship.take_hit}
+
+		status
+	end
+
 	def sunk_ship_holder
 		ship_holder.select{|ship| ship.status == :sunk}
 	end
@@ -60,8 +68,6 @@ class Board
 		end
 		overlapping.include?(true)
 	end
-
-	
 
 	def find_surrounding_coordinates(new_ship)
 		surrounding_coordinates = new_ship.coordinates.map do |coordinate|

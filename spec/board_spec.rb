@@ -66,7 +66,7 @@ describe Board do
 		it 'knows when a ship is sunk' do
 			ship = Ship.new ['A1']
 			board.build(ship)
-			cell.attempt('A1', board, ship)
+			board.register_shot_at ('A1')
 			expect(board.sunk_ship_holder).to eq [ship]
 		end
 
@@ -80,11 +80,12 @@ describe Board do
 			board2 = Board.new capacity: 2
 			ship1 = Ship.new ["A1"]
 			board2.build(ship1)
-			cell.attempt('A1', board2, ship1)
+			board2.register_shot_at('A1')
 			ship2 = Ship.new ["C6", "C7"]
 			board2.build(ship2)
-			cell.attempt("C6", board2, ship2)
-			cell.attempt("C7", board2, ship2)
+			board2.register_shot_at("C6")
+			board2.register_shot_at("C7")
+			p board2.sunk_ship_holder
 			expect(board2.sunk_ship_holder.count).to eq board2.capacity
 		end
 
