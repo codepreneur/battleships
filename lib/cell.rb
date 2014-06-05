@@ -12,7 +12,6 @@ class Cell
 		@status=value
 	end
 
-
 	def attempt(coordinate,board,ship)
 		ship.take_hit && hit! if board.representation[coordinate].status == :ship 
 		missed! if board.representation[coordinate].status == :empty
