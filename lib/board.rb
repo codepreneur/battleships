@@ -34,6 +34,7 @@ class Board
 
 	def add_to_board(ship)
 		raise RuntimeError if number_of_ships >= 10
+		raise OverlappingShips if overlapping_ships?(ship)
 		ship_holder << ship
 	end
 
@@ -47,6 +48,17 @@ class Board
 
 	def sunk_ship_holder
 		ship_holder.select{|ship| ship.status == :sunk}
+	end
+
+	def overlapping_ships?(new_ship)
+		overlapping = ship_holder.map do |ship|
+			ship.coordinates.any? do |coord1| 
+				new_ship.coordinates.any? do |coord2| 
+					coord1 == coord2 
+				end
+			end
+		end
+		overlapping.include?(true)
 	end
 
 end

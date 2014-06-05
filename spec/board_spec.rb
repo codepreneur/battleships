@@ -1,4 +1,5 @@
 require 'board'
+require 'errors'
 
 describe Board do
 
@@ -76,11 +77,29 @@ describe Board do
 		end
 
 		it 'knows when all the ships are sunk' do
-			ship = Ship.new ["A1"]
-			10.times {board.build(ship)}
-			10.times {cell.attempt('A1', board, ship)}
-			expect(board.sunk_ship_holder.count).to eq board.capacity
+			board2 = Board.new capacity: 2
+			ship1 = Ship.new ["A1"]
+			board2.build(ship1)
+			cell.attempt('A1', board2, ship1)
+			ship2 = Ship.new ["C6", "C7"]
+			board2.build(ship2)
+			cell.attempt("C6", board2, ship2)
+			cell.attempt("C7", board2, ship2)
+			expect(board2.sunk_ship_holder.count).to eq board2.capacity
 		end
+
+	end
+
+	context 'Board rules about ships' do
+
+		it 'check if ships overlap' do
+			ship1 = Ship.new ["B3", "B4", "B5"]
+			ship2 = Ship.new ["B5", "B6"]
+			board.build(ship1)
+			expect{board.build(ship2)}.to raise_error RuntimeError
+		end
+
+		it 'check if there are adjacent ships'
 
 	end
 
