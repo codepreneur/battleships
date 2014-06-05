@@ -11,7 +11,7 @@ class Ship
 		@status = :floating
 		@hit_count = 0
 		split
-
+		
 	end
 
 	def coord_letters
@@ -85,11 +85,13 @@ class Ship
 		@hit_count == size ? @status = :sunk : "#{@type} has taken #{hit_count} #{message_modifier}"
 	end
 
+	# Algorithm is down below
+
 	def range
 		("A".."J").map{ |char| 1.upto(10).map{ |num| "#{char}#{num}" }  }.flatten
 	end
 
-	def generate_range(l1,l2,n1,n2)
+	def create_range(l1,l2,n1,n2)
 		(l1..l2).map{ |char| (n1..n2).map{ |num| "#{char}#{num}" }  }.flatten
 	end
 
@@ -113,11 +115,35 @@ class Ship
 		coordinates.each{|coord| coord_letters << coord[0]; coord_numbers << coord[1].to_i }
 	end
 
-	def surrounding(coordinate)
 
-	end
+	# still needs finishing (WIP now) these are board functions
+
+	# coordinates.each{|coord| coord[0] }
+
+	# def surrounds(n)
+	# 	l1 = previous(coord_letters[n])
+	# 	l2 = coord_letters[n].next
+	# 	n1 = (coord_numbers[n] - 2).next
+	# 	n2 = coord_numbers[n].next
+	# 	create_range(l1,l2,n1,n2)
+	# end
+
+	# def surround_cell(n)
+
+	# end
+
+	# def surrounds_ship(ship)
+	# 	coordinates.each do |coord|
+	# 		arr = []
+	# 		arr << surrounds_cell(coord)
+	# 	end
+	# 		arr.uniq
+	# end
 
 
+
+
+		
 
 
 

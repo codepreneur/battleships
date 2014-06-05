@@ -115,7 +115,7 @@ describe Ship do
 
 	end
 
-	it "its coordinates must be given an array" do
+	it "its coordinates must be given as an array" do
 		ship = Ship.new(["A1", "A2"])	
 		expect(ship.coordinates.is_a? Array).to be_true
 
@@ -128,20 +128,38 @@ describe Ship do
 	end
 
 	it 'can be horizontal' do
+		ship = Ship.new(["A1","A2","A3"])
 		expect(ship.horizontal?).to be_true
 	end
 
 	it 'can be vertical' do
+		ship = Ship.new(["C5","D5","E5"])
 		expect(ship.vertical?).to be_true
 	end
 
 	it 'can have C5 as a coordinate' do
+		ship = Ship.new(["C5"])
 		expect(ship.range.include? "C5").to be_true
 	end
 
-	it 'can not have Z100 as a coordinate' do
-		expect(ship.range.include? "Z100").to be false
+	it 'cannot have Z100 as a coordinate' do
+		ship = Ship.new(["A1"])
+		expect(ship.range.include? "Z100").to be_false
 	end
+
+	it 'extracts letters from coordinates' do
+		ship = Ship.new(["A1","A2"])
+		expect(ship.coord_letters).to eq ["A","A"]
+	end
+
+	it 'extracts numbers from coordinates' do
+		ship = Ship.new(["A1","A2"])
+		expect(ship.coord_numbers).to eq [1,2]
+	end
+
+
+
+
 
 
 
