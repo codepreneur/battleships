@@ -1,4 +1,5 @@
 require 'board'
+require 'errors'
 
 describe Board do
 
@@ -65,7 +66,7 @@ describe Board do
 		it 'knows when a ship is sunk' do
 			ship = Ship.new ['A1']
 			board.build(ship)
-			cell.attempt('A1', board, ship)
+			board.register_shot_at ('A1')
 			expect(board.sunk_ship_holder).to eq [ship]
 		end
 
@@ -76,12 +77,40 @@ describe Board do
 		end
 
 		it 'knows when all the ships are sunk' do
-			ship = Ship.new ["A1"]
-			10.times {board.build(ship)}
-			10.times {cell.attempt('A1', board, ship)}
-			expect(board.sunk_ship_holder.count).to eq board.capacity
+			board2 = Board.new capacity: 2
+			ship1 = Ship.new ["A1"]
+			board2.build(ship1)
+			board2.register_shot_at('A1')
+			ship2 = Ship.new ["C6", "C7"]
+			board2.build(ship2)
+			board2.register_shot_at("C6")
+			board2.register_shot_at("C7")
+			expect(board2.sunk_ship_holder.count).to eq board2.capacity
 		end
 
+	end
+
+	context 'Board rules about ships' do
+
+		it 'check if ships overlap' do
+			ship1 = Ship.new ["B3", "B4", "B5"]
+			ship2 = Ship.new ["B5", "B6"]
+			board.build(ship1)
+			expect{board.build(ship2)}.to raise_error OverlappingShips
+		end
+
+		xit 'can get the surrounding coordinates' do
+			ship = Ship.new ["B3", "B4"]
+			board.build(ship)
+			expect(board.find_surrounding_coordinates(ship)).to eq ["A2", "A3", "A4", "A5", "B2", "B5", "C2", "C3", "C4", "C5"]
+		end
+
+		xit 'check if there are adjacent ships' do
+			ship1 = Ship.new ["B3", "B4", "B5"]
+			ship2 = Ship.new ["C3", "C4"]
+			board.build(ship1)
+			expect{board.build(ship2)}.to raise_error AdjacentShips
+		end
 	end
 
 	it 'communicates to the game that all the ships are sunk'

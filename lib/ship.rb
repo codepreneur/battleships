@@ -11,7 +11,10 @@ class Ship
 		@status = :floating
 		@hit_count = 0
 		split
+<<<<<<< HEAD
 		
+=======
+>>>>>>> ecf83073a7df3d2274b5f3f13d0fb66cbd7c182e
 	end
 
 	def coord_letters
@@ -22,6 +25,14 @@ class Ship
 		@coord_numbers
 	end
 
+	def convert_coords_to_cells(board)
+		cells = [] 
+		coordinates.map do |coordinate|
+			cell_object = board.representation[coordinate]
+			cells << cell_object
+		end
+		return cells
+	end
 
 	def type
 		@type
@@ -56,9 +67,9 @@ class Ship
 		@status
 	end
 
-	def hit_count
-		@hit_count
-	end
+	# def hit_count
+	# 	@hit_count
+	# end
 
 	def floating?
 		@status == :floating
@@ -78,11 +89,25 @@ class Ship
 	# 	end
 	# 	# @status == :floating ? @status = :sunk : "ship already sunk"
 	# end
+	def hit_count=(value)
+		@hit_count = value
+	end
+
+	def hit_cells(board)
+		@hit_count = convert_coords_to_cells(board).select { |cell|	cell.status == :hit	}.count
+	end
+
+	# def hit_count
+	# 	@hit_count
+	# end
 
 	def take_hit
-		@hit_count += 1 unless @hit_count == @size
-		hit_count == 1 ? message_modifier = "hit" : message_modifier = "hits" 
-		@hit_count == size ? @status = :sunk : "#{@type} has taken #{hit_count} #{message_modifier}"
+		# @hit_count = hit_cells(board)
+		@hit_count == @size ? @status = :sunk : "" #{@type} has taken #{hit_count} #{message_modifier}"
+		
+		# @hit_count += 1 unless @hit_count == @size
+		# # hit_count == 1 ? message_modifier = "hit" : message_modifier = "hits" 
+		# @hit_count == size ? @status = :sunk : "#{@type} has taken #{hit_count} #{message_modifier}"
 	end
 
 	# Algorithm is down below

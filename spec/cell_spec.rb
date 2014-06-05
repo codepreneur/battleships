@@ -17,14 +17,14 @@ describe Cell do
 
 	it 'can have hit status' do
 		ship = Ship.new ['A1']
-		board.representation['A1'].status = :ship
-		cell.attempt 'A1',board,ship
-		expect(cell.status).to eq :hit
+		board.build(ship)
+		board.register_shot_at 'A1'
+		expect(board.representation['A1'].status).to eq :hit
 	end
 
 	it 'can have missed status' do
 		ship = Ship.new ['A2']
-		cell.attempt 'A1',board,ship
-		expect(cell.status).to eq :missed
+		board.register_shot_at 'A1'
+		expect(board.representation['A1'].status).to eq :missed
 	end
 end
