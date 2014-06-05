@@ -135,6 +135,14 @@ describe Ship do
 		expect(ship.vertical?).to be_true
 	end
 
+	it 'can have C5 as a coordinate' do
+		expect(ship.range.include? "C5").to be_true
+	end
+
+	it 'can not have Z100 as a coordinate' do
+		expect(ship.range.include? "Z100").to be false
+	end
+
 
 
 

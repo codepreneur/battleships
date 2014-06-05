@@ -4,11 +4,22 @@ class Ship
 
 	def initialize(coord_array)
 		@coord_array = coord_array
+		@coord_letters ||= []
+		@coord_numbers ||= []
 		@size = set_size_according_to_coordinates(coord_array)
 		@type = set_type_according_to_size(size)
 		@status = :floating
 		@hit_count = 0
+		split
 
+	end
+
+	def coord_letters
+		@coord_letters
+	end
+
+	def coord_numbers
+		@coord_numbers
 	end
 
 
@@ -74,13 +85,39 @@ class Ship
 		@hit_count == size ? @status = :sunk : "#{@type} has taken #{hit_count} #{message_modifier}"
 	end
 
-	def horizontal?
+	def range
+		("A".."J").map{ |char| 1.upto(10).map{ |num| "#{char}#{num}" }  }.flatten
+	end
 
+	def generate_range(l1,l2,n1,n2)
+		(l1..l2).map{ |char| (n1..n2).map{ |num| "#{char}#{num}" }  }.flatten
+	end
+
+	def previous(char)
+		(char.ord - 1).chr
+	end
+
+	def horizontal?
+		coord_letters.uniq.count == 1 && incremental?(coord_numbers)
 	end
 
 	def vertical?
+		coord_numbers.uniq.count == 1 && incremental?(coord_letters)
+	end
+
+	def incremental?(array)
+		(array[0]..array[-1]).to_a == array
+	end
+
+	def split
+		coordinates.each{|coord| coord_letters << coord[0]; coord_numbers << coord[1].to_i }
+	end
+
+	def surrounding(coordinate)
 
 	end
+
+
 
 
 
