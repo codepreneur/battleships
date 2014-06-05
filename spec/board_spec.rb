@@ -96,11 +96,21 @@ describe Board do
 			ship1 = Ship.new ["B3", "B4", "B5"]
 			ship2 = Ship.new ["B5", "B6"]
 			board.build(ship1)
-			expect{board.build(ship2)}.to raise_error RuntimeError
+			expect{board.build(ship2)}.to raise_error OverlappingShips
 		end
 
-		it 'check if there are adjacent ships'
+		xit 'can get the surrounding coordinates' do
+			ship = Ship.new ["B3", "B4"]
+			board.build(ship)
+			expect(board.find_surrounding_coordinates(ship)).to eq ["A2", "A3", "A4", "A5", "B2", "B5", "C2", "C3", "C4", "C5"]
+		end
 
+		xit 'check if there are adjacent ships' do
+			ship1 = Ship.new ["B3", "B4", "B5"]
+			ship2 = Ship.new ["C3", "C4"]
+			board.build(ship1)
+			expect{board.build(ship2)}.to raise_error AdjacentShips
+		end
 	end
 
 	it 'communicates to the game that all the ships are sunk'

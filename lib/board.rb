@@ -61,4 +61,26 @@ class Board
 		overlapping.include?(true)
 	end
 
+	
+
+	def find_surrounding_coordinates(new_ship)
+		surrounding_coordinates = new_ship.coordinates.map do |coordinate|
+			split_coordinate = coordinate[0].chars
+			letter = split_coordinate[0]
+			number = split_coordinate[1].to_i
+			letters = []
+			letters << (letter.ord-1).chr
+			letters << letter
+			letters << letter.next
+			numbers = []
+			numbers << (number - 1)
+			numbers << number
+			numbers << (number + 1)
+			numbers.map! { |element| element.to_s }
+			combo = letters.product(numbers)
+			combo.map! { |element| element.join }
+			combo - new_ship.coordinates
+		end
+	end
+
 end

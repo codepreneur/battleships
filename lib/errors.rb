@@ -3,3 +3,9 @@ class OverlappingShips < RuntimeError
 		super
 	end
 end
+
+class AdjacentShips < RuntimeError
+	def initialize(message = "You can put a ship adjacent to another ship")
+		super
+	end
+end
