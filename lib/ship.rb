@@ -118,12 +118,12 @@ class Ship
 	end
 
 	def split
-		coordinates.each{|coord| coord_letters << coord[0]; coord_numbers << coord[1].to_i }
+		coordinates.each{|coord| coord_letters << coord[0]; coord_numbers << coord[1..2].to_i }
 	end
 
 
 	def surrounds(coord)
-		create_range(previous(coord[0]),coord[0].next,(coord[1].to_i-2).next,coord[1].next.to_i)
+		create_range(previous(coord[0]),coord[0].next,(coord[1..2].to_i-2).next,coord[1..2].next.to_i)
 	end
 
 
