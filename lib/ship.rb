@@ -2,15 +2,19 @@ class Ship
 
 	SHIP_TYPES = [:battleship, :cruiser, :destroyer, :submarine]
 
-	def initialize(coord_array)
+	def initialize(coord_array,board)
 		@coord_array = coord_array
 		@coord_letters ||= []
 		@coord_numbers ||= []
+		@surrounding_coordinates ||= []
 		@size = set_size_according_to_coordinates(coord_array)
 		@type = set_type_according_to_size(size)
 		@status = :floating
 		@hit_count = 0
 		split
+		raise "This ship is too big!!" if size > 4
+		raise "There is already a ship there" if taken?(board)
+		raise "Only straight (no diagonal or bent) ships please" unless horizontal? || vertical?
 	end
 
 	def coord_letters
@@ -19,6 +23,10 @@ class Ship
 
 	def coord_numbers
 		@coord_numbers
+	end
+
+	def surrounding_coordinates
+		@surrounding_coordinates
 	end
 
 	def convert_coords_to_cells(board)
@@ -63,10 +71,6 @@ class Ship
 		@status
 	end
 
-	# def hit_count
-	# 	@hit_count
-	# end
-
 	def floating?
 		@status == :floating
 	end
@@ -75,16 +79,6 @@ class Ship
 		@status == :sunk
 	end
 
-	# def sink
-	# 	if @hit_count == @size && !sunk?
-	# 		@status = :sunk
-	# 	elsif @hit_count == @size && sunk?
-	# 		"ship already sunk"
-	# 	else 
-	# 		"ship shouldn\'t sink yet"
-	# 	end
-	# 	# @status == :floating ? @status = :sunk : "ship already sunk"
-	# end
 	def hit_count=(value)
 		@hit_count = value
 	end
@@ -93,17 +87,8 @@ class Ship
 		@hit_count = convert_coords_to_cells(board).select { |cell|	cell.status == :hit	}.count
 	end
 
-	# def hit_count
-	# 	@hit_count
-	# end
-
 	def take_hit
-		# @hit_count = hit_cells(board)
-		@hit_count == @size ? @status = :sunk : "" #{@type} has taken #{hit_count} #{message_modifier}"
-		
-		# @hit_count += 1 unless @hit_count == @size
-		# # hit_count == 1 ? message_modifier = "hit" : message_modifier = "hits" 
-		# @hit_count == size ? @status = :sunk : "#{@type} has taken #{hit_count} #{message_modifier}"
+		@hit_count == @size ? @status = :sunk : ""
 	end
 
 	# Algorithm is down below
@@ -137,31 +122,25 @@ class Ship
 	end
 
 
-	# still needs finishing (WIP now) these are board functions
-
-	# coordinates.each{|coord| coord[0] }
-
-	# def surrounds(n)
-	# 	l1 = previous(coord_letters[n])
-	# 	l2 = coord_letters[n].next
-	# 	n1 = (coord_numbers[n] - 2).next
-	# 	n2 = coord_numbers[n].next
-	# 	create_range(l1,l2,n1,n2)
-	# end
-
-	# def surround_cell(n)
-
-	# end
-
-	# def surrounds_ship(ship)
-	# 	coordinates.each do |coord|
-	# 		arr = []
-	# 		arr << surrounds_cell(coord)
-	# 	end
-	# 		arr.uniq
-	# end
+	def surrounds(coord)
+		create_range(previous(coord[0]),coord[0].next,(coord[1].to_i-2).next,coord[1].next.to_i)
+	end
 
 
+	def surrounds_ship
+		coordinates.each do |coord|
+			surrounding_coordinates << surrounds(coord)
+		end
+			surrounding_coordinates.uniq
+	end
+
+	def taken?(board)
+		candidates.any? {|coord| board.representation[coord].status == :ship}
+	end
+
+	def candidates
+		surrounds_ship.flatten.uniq.select{|c| range.include? c}
+	end
 
 
 		
