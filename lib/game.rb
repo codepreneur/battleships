@@ -32,7 +32,7 @@ class Game
   def instructions
     inst = "Welcome to Battleships!\n"
     inst += "Coordinates Range from A1 to J10\n"
-    inst += "battleship, cruiser, destroyer, submarine\n"
+    inst += "You can insert 4 submarines (size 1), 3 destroyers (size 2), 2 cruisers (size 3) and 1 battleship (size 4)\n"
     inst += "right, left, up, down\n"
   end
 
