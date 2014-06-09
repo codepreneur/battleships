@@ -84,11 +84,11 @@ class Ship
 	end
 
 	def hit_cells(board)
-		@hit_count = convert_coords_to_cells(board).select { |cell|	cell.status == :hit	}.count
+		@hit_count = convert_coords_to_cells(board).select { |cell|	cell.status == :hit	}.count	
 	end
 
 	def take_hit
-		@hit_count == @size ? @status = :sunk : ""
+		@status = :sunk if @hit_count == @size
 	end
 
 	# Algorithm is down below
@@ -141,10 +141,5 @@ class Ship
 	def candidates
 		surrounds_ship.flatten.uniq.select{|c| range.include? c}
 	end
-
-
-		
-
-
 
 end
